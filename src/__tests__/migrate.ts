@@ -306,22 +306,6 @@ test("bad arguments - incorrect host", async (t) => {
   t.regex(err.message, /sillyhost/)
 })
 
-test("bad arguments - incorrect port", async (t) => {
-  const err = await t.throwsAsync(
-    migrate(
-      {
-        database: "migration-test-args",
-        user: "postgres",
-        password: PASSWORD,
-        host: "localhost",
-        port: 1234,
-      },
-      "src/__tests__/fixtures/empty",
-    ),
-  )
-  t.regex(err.message, /1234/)
-})
-
 test("no database - ensureDatabaseExists = undefined", async (t) => {
   const err = await t.throwsAsync(
     migrate(

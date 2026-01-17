@@ -1,7 +1,7 @@
 {
   "name": "postgres-schema-migrations",
-  "version": "6.1.0",
-  "description": "Stack Overflow style database migrations for PostgreSQL",
+  "version": "7.0.0",
+  "description": "Database migrations for PostgreSQL",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -35,22 +35,22 @@
   },
   "scripts": {
     "checkPushed": "[ \"$(git rev-list --count @{upstream}..HEAD)\" -eq 0 ] || (echo You have unpushed commits && exit 1)",
-    "prepublishOnly": "npm run checkPushed && npm test && npm run build",
+    "prepublishOnly": "pnpm run checkPushed && pnpm test && pnpm run build",
     "check-formatting": "./node_modules/.bin/prettier '**/*.ts' --list-different",
     "fix-formatting": "./node_modules/.bin/prettier '**/*.ts' --write",
-    "lint": "npm run eslint && npm run check-formatting",
+    "lint": "pnpm run eslint && pnpm run check-formatting",
     "eslint": "eslint 'src/**/*.ts'",
     "test-integration": "ava --config ava.config.integration.cjs",
     "test-unit": "ava --config ava.config.unit.cjs",
-    "test": "npm run test-unit && npm run lint && npm run test-integration",
-    "preversion": "npm test",
+    "test": "pnpm run test-unit && npm run lint && pnpm run test-integration",
+    "preversion": "pnpm test",
     "build": "rm -rf ./dist && rsync -a --exclude='*.ts' --exclude='__tests__' --exclude='__unit__' --prune-empty-dirs src/ dist/ && tsc --project tsconfig-build.json && cp ./package.json ./dist/"
   },
   "husky": {
     "hooks": {
       "commit-msg": "node ./node_modules/fit-commit-js/lib/hook.js .git/COMMIT_EDITMSG",
-      "pre-commit": "npm run lint",
-      "pre-push": "npm test"
+      "pre-commit": "pnpm run lint",
+      "pre-push": "pnpm test"
     }
   },
   "dependencies": {

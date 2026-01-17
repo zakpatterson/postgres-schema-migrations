@@ -75,16 +75,18 @@ async function() {
 }
 ```
 
-### Namespaced migrations 
+### Namespaced migrations
 
 To track migrations within a given schema, just pass an additional `{schema: "your_schema_name"}` parameter to `migrate`, as in:
 
 ```typescript
-  try {
-    await migrate({client}, "path/to/schema/migration/files", {schema: "schema_name"})
-  } finally {
-    await client.end()
-  }
+try {
+  await migrate({client}, "path/to/schema/migration/files", {
+    schema: "schema_name",
+  })
+} finally {
+  await client.end()
+}
 ```
 
 Without specifying this parameter, this library will default to the `public` schema.

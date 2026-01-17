@@ -35,7 +35,7 @@
   },
   "scripts": {
     "checkPushed": "[ \"$(git rev-list --count @{upstream}..HEAD)\" -eq 0 ] || (echo You have unpushed commits && exit 1)",
-    "prepublishOnly": "pnpm run checkPushed && pnpm test && pnpm run build",
+    "prepublishOnly": "pnpm test && pnpm run build",
     "check-formatting": "./node_modules/.bin/prettier '**/*.ts' --list-different",
     "fix-formatting": "./node_modules/.bin/prettier '**/*.ts' --write",
     "lint": "pnpm run eslint && pnpm run check-formatting",

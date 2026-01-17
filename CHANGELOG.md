@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.0.0
+
+- schema migrations were added
+- deprecated createDb removed
+- esm import/export syntax everywhere
+
 ## 5.3.0
 
 - [DEPRECATION] Deprecate `createDb`

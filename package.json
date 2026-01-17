@@ -1,6 +1,6 @@
 {
   "name": "postgres-schema-migrations",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "Database migrations for PostgreSQL",
   "type": "module",
   "main": "dist/index.js",
@@ -44,7 +44,7 @@
     "test-unit": "ava --config ava.config.unit.cjs",
     "test": "pnpm run test-unit && npm run lint && pnpm run test-integration",
     "preversion": "pnpm test",
-    "build": "rm -rf ./dist && rsync -a --exclude='*.ts' --exclude='__tests__' --exclude='__unit__' --prune-empty-dirs src/ dist/ && tsc --project tsconfig-build.json && cp ./package.json ./dist/"
+    "build": "rm -rf ./dist && rsync -a --exclude='*.ts' --exclude='__tests__' --exclude='__unit__' --prune-empty-dirs src/ dist/ && tsc --project tsconfig-build.json && node -e \"const p=require('./package.json'); p.main='index.js'; p.types='index.d.ts'; p.bin={'pg-validate-migrations':'./bin/validate.js'}; require('fs').writeFileSync('./dist/package.json', JSON.stringify(p, null, 2));\""
   },
   "husky": {
     "hooks": {

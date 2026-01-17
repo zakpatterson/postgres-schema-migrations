@@ -20,23 +20,31 @@ export function withAdvisoryLock<T>(
           }
         }
         log("... acquired advisory lock")
-      } catch (e) {
-        log(`Error acquiring advisory lock: ${e.message}`)
+      } catch (e: unknown) {
+        if (e instanceof Error) {
+          log(`Error acquiring advisory lock: ${e.message}`)
+        }
+
         throw e
       }
 
       const result = await f(client)
       return result
-    } catch (e) {
-      log(`Error while using lock: ${e.message}`)
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        log(`Error while using lock: ${e.message}`)
+      }
       throw e
     } finally {
       try {
         log("Releasing advisory lock...")
         await client.query("SELECT pg_advisory_unlock(-8525285245963000605);")
         log("... released advisory lock")
-      } catch (e) {
-        log(`Error releasing advisory lock: ${e.message}`)
+      } catch (e: unknown) {
+        if (e instanceof Error) {
+          log(`Error releasing advisory lock: ${e.message}`)
+        }
+        // Don't re-throw - avoid masking the original error from the try block
       }
     }
   }

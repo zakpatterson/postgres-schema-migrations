@@ -1,4 +1,4 @@
-module.exports = name => `CREATE TABLE ${name} (
+export default name => `CREATE TABLE ${name} (
   id integer
 );
 `

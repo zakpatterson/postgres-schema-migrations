@@ -14,16 +14,16 @@ const getFileContents = async (filePath: string) => readFile(filePath, "utf8")
 const hashString = (s: string) =>
   crypto.createHash("sha1").update(s, "utf8").digest("hex")
 
-const getSqlStringLiteral = (
+const getSqlStringLiteral = async (
   filePath: string,
   contents: string,
   type: "js" | "sql",
-) => {
+): Promise<string> => {
   switch (type) {
     case "sql":
       return contents
     case "js":
-      return loadSqlFromJs(filePath)
+      return await loadSqlFromJs(filePath)
     default: {
       const exhaustiveCheck: never = type
       return exhaustiveCheck
@@ -37,7 +37,7 @@ export const loadMigrationFile = async (filePath: string) => {
   try {
     const {id, name, type} = parseFileName(fileName)
     const contents = await getFileContents(filePath)
-    const sql = getSqlStringLiteral(filePath, contents, type)
+    const sql = await getSqlStringLiteral(filePath, contents, type)
     const hash = hashString(fileName + sql)
 
     return {
@@ -48,7 +48,10 @@ export const loadMigrationFile = async (filePath: string) => {
       hash,
       sql,
     }
-  } catch (err) {
-    throw new Error(`${err.message} - Offending file: '${fileName}'.`)
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(`${err.message} - Offending file: '${fileName}'.`)
+    }
+    throw err
   }
 }

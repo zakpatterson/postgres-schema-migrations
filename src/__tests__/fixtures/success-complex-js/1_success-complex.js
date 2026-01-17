@@ -1,7 +1,7 @@
-const createSuccess = require("./schema/create_success")
-const createDynamicTable = require("./schema/create_dynamic_table")
+import createSuccess from "./schema/create_success.js"
+import createDynamicTable from "./schema/create_dynamic_table.js"
 
-module.exports.generateSql = () => `
+export const generateSql = () => `
 ${createSuccess}
 ${createDynamicTable("complex")}
 `

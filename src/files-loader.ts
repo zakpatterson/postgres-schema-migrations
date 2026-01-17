@@ -1,9 +1,12 @@
 import * as fs from "fs"
 import * as path from "path"
 import {promisify} from "util"
+import {fileURLToPath} from "url"
 import {loadMigrationFile} from "./migration-file"
 import {Logger, Migration} from "./types"
 import {validateMigrationOrdering} from "./validation"
+
+const currentDir = path.dirname(fileURLToPath(import.meta.url))
 
 const readDir = promisify(fs.readdir)
 
@@ -33,7 +36,7 @@ export const loadMigrationFiles = async (
   }
 
   const migrationFiles = [
-    path.join(__dirname, "migrations/0_create-migrations-table.sql"),
+    path.join(currentDir, "migrations/0_create-migrations-table.sql"),
     ...fileNames.map((fileName) => path.resolve(directory, fileName)),
   ].filter(isValidFile)
 

@@ -52,14 +52,17 @@ export const runMigration =
       end()
 
       return migration
-    } catch (err) {
+    } catch (err: unknown) {
       try {
         await cleanup()
       } catch {
         //
       }
-      throw new Error(
-        `An error occurred running '${migration.name}'. Rolled back this migration. No further migrations were run. Reason: ${err.message}`,
-      )
+      if (err instanceof Error) {
+        throw new Error(
+          `An error occurred running '${migration.name}'. Rolled back this migration. No further migrations were run. Reason: ${err.message}`,
+        )
+      }
+      throw err
     }
   }

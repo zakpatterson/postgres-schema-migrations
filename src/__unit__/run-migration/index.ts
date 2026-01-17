@@ -1,5 +1,7 @@
 import test from "ava"
 import * as sinon from "sinon"
+import {fileURLToPath} from "url"
+import {dirname} from "path"
 
 import {runMigration} from "../../run-migration"
 import {loadSqlFromJs} from "../../load-sql-from-js"
@@ -7,6 +9,7 @@ import {promisify} from "util"
 import {readFile as fsReadFile} from "fs"
 import {Migration} from "../../types"
 
+const testDir = dirname(fileURLToPath(import.meta.url))
 const readFile = promisify(fsReadFile)
 
 let normalSqlFile: string
@@ -15,18 +18,18 @@ let noTransactionSqlFile: string
 
 test.before(async () => {
   await Promise.all([
-    readFile(__dirname + "/fixtures/normal.sql", "utf8").then((contents) => {
+    readFile(testDir + "/fixtures/normal.sql", "utf8").then((contents) => {
       normalSqlFile = contents
     }),
 
-    readFile(__dirname + "/fixtures/no-transaction.sql", "utf8").then(
+    readFile(testDir + "/fixtures/no-transaction.sql", "utf8").then(
       (contents) => {
         noTransactionSqlFile = contents
       },
     ),
 
-    Promise.resolve().then(() => {
-      normalJsFile = loadSqlFromJs(__dirname + "/fixtures/normal.sql.js")
+    loadSqlFromJs(testDir + "/fixtures/normal.sql.js").then((contents) => {
+      normalJsFile = contents
     }),
   ])
 })

@@ -1,5 +1,5 @@
-const getNumber = require("../inc")
+import getNumber from "../inc.js"
 
-module.exports.generateSql = () => {
+export const generateSql = () => {
   return "SELECT * FROM something; " + getNumber()
 }

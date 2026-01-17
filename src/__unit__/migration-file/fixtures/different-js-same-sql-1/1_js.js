@@ -1,3 +1,3 @@
-module.exports.generateSql = () => {
+export const generateSql = () => {
   return "SELECT * FROM something;"
 }

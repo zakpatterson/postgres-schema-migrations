@@ -1,4 +1,4 @@
-module.exports.generateSql = () => `
+export const generateSql = () => `
 CREATE TABLE success (
   id integer
 );

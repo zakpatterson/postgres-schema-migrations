@@ -1,7 +1,9 @@
 import * as path from "path"
+import {pathToFileURL} from "url"
 
-export const loadSqlFromJs = (filePath: string): string => {
-  const migrationModule = require(filePath)
+export const loadSqlFromJs = async (filePath: string): Promise<string> => {
+  const fileUrl = pathToFileURL(filePath).href
+  const migrationModule = await import(fileUrl)
   if (!migrationModule.generateSql) {
     throw new Error(`Invalid javascript migration file: '${path.basename(
       filePath,

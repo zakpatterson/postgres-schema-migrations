@@ -163,12 +163,18 @@ function runMigrations(
       log("Finished migrations")
 
       return completedMigrations
-    } catch (e) {
-      const exception: Error = e as Error
+    } catch (e: unknown) {
+      const reason = (() => {
+        if (e instanceof Error) {
+          return e.message
+        }
+
+        return `${e}`
+      })()
       const error: MigrationError = new Error(
-        `Migration failed. Reason: ${exception.message}`,
+        `Migration failed. Reason: ${reason}`,
       )
-      error.cause = exception.message
+      error.cause = reason
       throw error
     }
   }
@@ -229,7 +235,7 @@ export async function doesTableExist(client: BasicPgClient, tableName: string) {
     SELECT EXISTS (
       SELECT 1
       FROM   pg_catalog.pg_class c
-      JOIN   pg_catalog.pg_namespace n 
+      JOIN   pg_catalog.pg_namespace n
         ON     n.oid = c.relnamespace
       WHERE  c.relname = ${table}
         AND    c.relkind = 'r'

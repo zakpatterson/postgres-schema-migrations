@@ -2,12 +2,16 @@
   "name": "postgres-schema-migrations",
   "version": "6.1.0",
   "description": "Stack Overflow style database migrations for PostgreSQL",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
     "pg-validate-migrations": "./dist/bin/validate.js"
   },
-  "authors": ["Thom Wright", "Zak Patterson"],
+  "authors": [
+    "Thom Wright",
+    "Zak Patterson"
+  ],
   "keywords": [
     "postgres",
     "postgresql",
@@ -34,8 +38,8 @@
     "prepublishOnly": "npm run checkPushed && npm test && npm run build",
     "check-formatting": "./node_modules/.bin/prettier '**/*.ts' --list-different",
     "fix-formatting": "./node_modules/.bin/prettier '**/*.ts' --write",
-    "lint": "npm run tslint && npm run check-formatting",
-    "tslint": "tslint 'src/**/*.ts' --type-check --project tsconfig.json --format verbose",
+    "lint": "npm run eslint && npm run check-formatting",
+    "eslint": "eslint 'src/**/*.ts'",
     "test-integration": "ava --config ava.config.integration.cjs",
     "test-unit": "ava --config ava.config.unit.cjs",
     "test": "npm run test-unit && npm run lint && npm run test-integration",
@@ -50,22 +54,23 @@
     }
   },
   "dependencies": {
-    "pg": "^8.6.0",
+    "pg": "^8.17.1",
     "sql-template-strings": "^2.2.2"
   },
   "devDependencies": {
-    "@types/node": "^10.17.60",
-    "@types/pg": "^8.6.0",
-    "@types/sinon": "^9.0.11",
-    "ava": "^3.15.0",
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^25.0.9",
+    "@types/pg": "^8.16.0",
+    "@types/sinon": "^21.0.0",
+    "ava": "^6.4.1",
+    "eslint": "^9.39.2",
     "fit-commit-js": "^0.3.2",
-    "husky": "^3.1.0",
-    "prettier": "^2.3.1",
-    "sinon": "^9.2.4",
-    "ts-node": "^10.0.0",
-    "tslint": "^6.1.3",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.3.4",
-    "typescript-tslint-plugin": "^1.0.1"
+    "husky": "^9.1.7",
+    "prettier": "^3.8.0",
+    "sinon": "^21.0.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.0"
   }
 }

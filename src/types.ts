@@ -38,16 +38,6 @@ export type EnsureDatabase =
       readonly ensureDatabaseExists?: false
     }
 
-/**
- * @deprecated Use `migrate` instead with `ensureDatabaseExists: true`.
- */
-export type CreateDBConfig =
-  | (ConnectionParams & {
-      /** The database to connect to when creating the new database. */
-      readonly defaultDatabase?: string
-    })
-  | ClientParams
-
 export type MigrateDBConfig =
   | (ConnectionParams & {
       readonly database: string

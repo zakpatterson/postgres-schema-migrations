@@ -1,3 +1,3 @@
-module.exports.generateSql = () => {
+export const generateSql = () => {
   return new String("I want to run!!")
 }

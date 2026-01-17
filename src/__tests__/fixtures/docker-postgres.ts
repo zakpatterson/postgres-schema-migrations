@@ -1,6 +1,5 @@
 // tslint:disable no-console
 
-import {CbExecutionContext} from "ava"
 import {execSync, spawn} from "child_process"
 
 export const PASSWORD = "mysecretpassword"
@@ -16,52 +15,54 @@ export const stopPostgres = (containerName: string) => {
   }
 }
 
-export const startPostgres = (containerName: string, t: CbExecutionContext) => {
-  try {
+export const startPostgres = (containerName: string): Promise<number> => {
+  return new Promise((resolve, reject) => {
     try {
-      execSync(`docker rm -f ${containerName}`, {stdio: "ignore"})
-    } catch (error) {
-      //
-    }
-
-    const events = spawn("docker", [
-      "events",
-      "--filter",
-      "type=container",
-      "--filter",
-      `container=${containerName}`,
-      "--filter",
-      "event=health_status",
-    ])
-    events.stdout.on("data", (data) => {
-      const dataString = data.toString()
-
-      if (dataString.includes("health_status: healthy")) {
-        events.kill()
-
-        t.end()
+      try {
+        execSync(`docker rm -f ${containerName}`, {stdio: "ignore"})
+      } catch {
+        // ignore - container may not exist
       }
-    })
-    events.on("error", (err) => {
-      console.error("Error in 'docker events' process:", err)
-      events.kill()
-      t.fail(err.message)
-    })
 
-    execSync(`docker run --detach --publish-all  \
-      --name ${containerName} \
-      --env POSTGRES_PASSWORD=${PASSWORD} \
-      --health-cmd ${HEALTH_CHECK_CMD} \
-      --health-interval=1s \
-      --health-retries=30 \
-      --health-timeout=1s \
-      postgres:9.4`)
+      const events = spawn("docker", [
+        "events",
+        "--filter",
+        "type=container",
+        "--filter",
+        `container=${containerName}`,
+        "--filter",
+        "event=health_status",
+      ])
+      events.stdout.on("data", (data) => {
+        const dataString = data.toString()
 
-    const portMapping = execSync(`docker port ${containerName} 5432`).toString()
-    const port = parseInt(portMapping.split(":")[1], 10)
-    return port
-  } catch (error) {
-    console.log("Could not start Postgres", error)
-    throw error
-  }
+        if (dataString.includes("health_status: healthy")) {
+          events.kill()
+
+          const portMapping = execSync(
+            `docker port ${containerName} 5432`,
+          ).toString()
+          const port = parseInt(portMapping.split(":")[1], 10)
+          resolve(port)
+        }
+      })
+      events.on("error", (err) => {
+        console.error("Error in 'docker events' process:", err)
+        events.kill()
+        reject(err)
+      })
+
+      execSync(`docker run --detach --publish-all  \
+        --name ${containerName} \
+        --env POSTGRES_PASSWORD=${PASSWORD} \
+        --health-cmd ${HEALTH_CHECK_CMD} \
+        --health-interval=1s \
+        --health-retries=30 \
+        --health-timeout=1s \
+        postgres:9.4`)
+    } catch (error) {
+      console.log("Could not start Postgres", error)
+      reject(error)
+    }
+  })
 }

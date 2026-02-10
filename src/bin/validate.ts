@@ -2,7 +2,7 @@
 // tslint:disable no-console
 
 import {argv} from "process"
-import {loadMigrationFiles} from "../files-loader"
+import {loadMigrationFiles} from "../files-loader.js"
 
 async function main(args: Array<string>) {
   const directory = args[0]

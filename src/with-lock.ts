@@ -1,4 +1,4 @@
-import {Logger, BasicPgClient} from "./types"
+import {Logger, BasicPgClient} from "./types.js"
 
 export function withAdvisoryLock<T>(
   log: Logger,

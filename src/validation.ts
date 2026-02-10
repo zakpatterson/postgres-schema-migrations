@@ -1,4 +1,4 @@
-import {Migration} from "./types"
+import {Migration} from "./types.js"
 
 const indexNotMatch = (migration: Migration, index: number) =>
   migration.id !== index

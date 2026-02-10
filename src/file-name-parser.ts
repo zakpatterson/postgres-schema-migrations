@@ -1,4 +1,4 @@
-import {FileType} from "./types"
+import {FileType} from "./types.js"
 
 const parseId = (id: string) => {
   const parsed = parseInt(id, 10)

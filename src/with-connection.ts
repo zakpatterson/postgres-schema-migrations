@@ -1,5 +1,5 @@
 import * as pg from "pg"
-import {Logger, BasicPgClient} from "./types"
+import {Logger, BasicPgClient} from "./types.js"
 
 export function withConnection<T>(
   log: Logger,

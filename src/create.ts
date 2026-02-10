@@ -1,4 +1,4 @@
-import {BasicPgClient, Logger} from "./types"
+import {BasicPgClient, Logger} from "./types.js"
 
 const DUPLICATE_DATABASE = "42P04"
 

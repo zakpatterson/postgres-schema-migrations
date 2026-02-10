@@ -2,9 +2,9 @@ import * as fs from "fs"
 import * as path from "path"
 import {promisify} from "util"
 import {fileURLToPath} from "url"
-import {loadMigrationFile} from "./migration-file"
-import {Logger, Migration} from "./types"
-import {validateMigrationOrdering} from "./validation"
+import {loadMigrationFile} from "./migration-file.js"
+import {Logger, Migration} from "./types.js"
+import {validateMigrationOrdering} from "./validation.js"
 
 const currentDir = path.dirname(fileURLToPath(import.meta.url))
 

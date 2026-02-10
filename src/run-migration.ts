@@ -1,5 +1,6 @@
-import SQL from "sql-template-strings"
-import {Logger, Migration, BasicPgClient} from "./types"
+import sqlModule from "sql-template-strings"
+const SQL = sqlModule.default ?? sqlModule
+import {Logger, Migration, BasicPgClient} from "./types.js"
 
 const noop = (): void => {
   //

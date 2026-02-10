@@ -1,6 +1,6 @@
 {
   "name": "postgres-schema-migrations",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "Database migrations for PostgreSQL",
   "type": "module",
   "main": "dist/index.js",
@@ -54,23 +54,23 @@
     }
   },
   "dependencies": {
-    "pg": "^8.17.1",
+    "pg": "^8.18.0",
     "sql-template-strings": "^2.2.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "@types/node": "^25.0.9",
+    "@types/node": "^25.2.3",
     "@types/pg": "^8.16.0",
     "@types/sinon": "^21.0.0",
     "ava": "^6.4.1",
     "eslint": "^9.39.2",
     "fit-commit-js": "^0.3.2",
     "husky": "^9.1.7",
-    "prettier": "^3.8.0",
+    "prettier": "^3.8.1",
     "sinon": "^21.0.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.53.0"
+    "typescript-eslint": "^8.55.0"
   }
 }

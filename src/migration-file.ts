@@ -2,8 +2,8 @@ import {promisify} from "util"
 import * as fs from "fs"
 import * as path from "path"
 import * as crypto from "crypto"
-import {loadSqlFromJs} from "./load-sql-from-js"
-import {parseFileName} from "./file-name-parser"
+import {loadSqlFromJs} from "./load-sql-from-js.js"
+import {parseFileName} from "./file-name-parser.js"
 
 const readFile = promisify(fs.readFile)
 

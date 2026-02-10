@@ -1,5 +1,5 @@
-export {migrate} from "./migrate"
-export {loadMigrationFiles} from "./files-loader"
+export {migrate} from "./migrate.js"
+export {loadMigrationFiles} from "./files-loader.js"
 
 export {
   ConnectionParams,
@@ -7,4 +7,4 @@ export {
   Logger,
   Config,
   MigrationError,
-} from "./types"
+} from "./types.js"

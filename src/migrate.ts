@@ -1,8 +1,9 @@
 import * as pg from "pg"
-import SQL from "sql-template-strings"
-import {runCreateQuery} from "./create"
-import {loadMigrationFiles} from "./files-loader"
-import {runMigration} from "./run-migration"
+import sqlModule from "sql-template-strings"
+const SQL = sqlModule.default ?? sqlModule
+import {runCreateQuery} from "./create.js"
+import {loadMigrationFiles} from "./files-loader.js"
+import {runMigration} from "./run-migration.js"
 import {
   BasicPgClient,
   Config,
@@ -10,10 +11,10 @@ import {
   MigrateDBConfig,
   Migration,
   MigrationError,
-} from "./types"
-import {validateMigrationHashes} from "./validation"
-import {withConnection} from "./with-connection"
-import {withAdvisoryLock} from "./with-lock"
+} from "./types.js"
+import {validateMigrationHashes} from "./validation.js"
+import {withConnection} from "./with-connection.js"
+import {withAdvisoryLock} from "./with-lock.js"
 
 const splitTableName = (tableName: string): [string, string] => {
   const parts = tableName.split(".")
